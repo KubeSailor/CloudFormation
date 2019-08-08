@@ -1,0 +1,38 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Ec2 Instance",
+    "Resources": {
+        
+        "Ec2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "KeyName": "jenkins",
+                "ImageId": "ami-0f93b5fd8f220e428",
+                "InstanceType": "t2.micro",
+                "SecurityGroupIds" : ["jenkins"],
+                "Tags": [
+                    {
+                        "Key": "cloudformation",
+                        "Value": "-"
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -ex",
+                                "sudo -i",
+                                "sudo apt-get update",
+                                "sudo apt-get install nginx",
+                                "sudo service nginx restart"
+                            ]
+                        ]
+                    }
+                }
+        }
+                }
+    }
+
+    
+}
